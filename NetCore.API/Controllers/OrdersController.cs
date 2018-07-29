@@ -4,9 +4,11 @@ using LFSCore.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace NetCore.API.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     public class OrdersController : Controller
     {
@@ -21,6 +23,7 @@ namespace NetCore.API.Controllers
            return Ok(orders);
         }
 
+        //[AllowAnonymous]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetOrder(int id){
 

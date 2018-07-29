@@ -10,6 +10,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.EntityFrameworkCore;
+using NetCore.API.Data;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace NetCore.API
 {
@@ -27,7 +31,23 @@ namespace NetCore.API
         {
             services.AddDbContext<QLCContext>(s=>s.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddMvc();
-            services.AddCors();
+            services.AddCors(); // this function resolve cross origin issues 
+            services.AddScoped<IAuthRepository,AuthRepository>(); // this function use for add interface and thier implemention
+            // below code is use for tell application what type of Authentication we use
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                    .AddJwtBearer(options => {
+
+                       options.TokenValidationParameters = new TokenValidationParameters
+                       {
+                           ValidateIssuerSigningKey = true,
+                           IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.
+                              GetBytes(Configuration.GetSection("AppSettings:Token").Value)),
+                              ValidateIssuer = false,
+                              ValidateAudience = false
+                       };
+                    });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -38,6 +58,7 @@ namespace NetCore.API
                 app.UseDeveloperExceptionPage();
             }
             app.UseCors(c=> c.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+            app.UseAuthentication(); // it is use for Authentication which we implement
             app.UseMvc();
         }
     }
