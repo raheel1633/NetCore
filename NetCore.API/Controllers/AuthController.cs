@@ -4,6 +4,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using LFSCore.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -44,8 +45,12 @@ namespace NetCore.API.Controllers {
 
         }
 
+        //[AllowAnonymous]        
         [HttpPost ("login")]
         public async Task<IActionResult> Login ([FromBody] UserForLoginDto userDto) {
+            
+            //throw new Exception("Exception from auth controller api");
+
             if (!ModelState.IsValid)
                 return BadRequest (ModelState);
 
