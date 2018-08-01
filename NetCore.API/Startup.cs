@@ -34,9 +34,13 @@ namespace NetCore.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<QLCContext>(s=>s.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddMvc();
+            services.AddMvc().AddJsonOptions(opt => {
+                opt.SerializerSettings.ReferenceLoopHandling = 
+                    Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+            });
             services.AddCors(); // this function resolve cross origin issues 
             services.AddScoped<IAuthRepository,AuthRepository>(); // this function use for add interface and thier implemention
+            services.AddScoped<ILFSRepository,LFSRepository>(); // this function use for add interface and thier implemention
             // below code is use for tell application what type of Authentication we use
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

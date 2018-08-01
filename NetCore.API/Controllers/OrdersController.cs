@@ -5,30 +5,35 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using NetCore.API.Data;
 
 namespace NetCore.API.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [Route("api/[controller]")]
-    public class OrdersController : Controller
+    public class OrdersController : ControllerBase
     {
-        private readonly QLCContext _context;
-        public OrdersController(QLCContext context) => _context = context;
+        private readonly ILFSRepository _repo;
+        public OrdersController(ILFSRepository repo)
+        {
+            _repo = repo;
+        }
 
         [HttpGet]
         public async Task<IActionResult> GetOrders()
         {
-           var orders = await _context.Order.Take(15).ToListAsync();
-           
-           return Ok(orders);
+            var orders = await _repo.GetOrders();
+
+            return Ok(orders);
         }
 
         //[AllowAnonymous]
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetOrder(int id){
+        public async Task<IActionResult> GetOrder(int id)
+        {
 
-            var order = await _context.Order.FirstOrDefaultAsync(c=>c.OrderId == id);
-            
+            var order = await _repo.GetOrder(id);
+
             return Ok(order);
         }
     }
