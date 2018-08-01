@@ -16,7 +16,7 @@ import { AlertifyService } from './_services/alertify.service';
 import { MemberListComponent } from './member-list/member-list.component';
 import { ListsComponent } from './lists/lists.component';
 import { appRoutes } from './routes';
-import { AuthGuard } from '../_guards/auth.guard';
+import { AuthGuard } from './_guards/auth.guard';
 
 
 
