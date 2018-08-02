@@ -1,4 +1,4 @@
-import { Injectable } from '../../../node_modules/@angular/core';
+import { Injectable } from '@angular/core';
 import {
   HttpInterceptor,
   HttpRequest,
@@ -6,9 +6,9 @@ import {
   HttpEvent,
   HttpErrorResponse,
   HTTP_INTERCEPTORS
-} from '../../../node_modules/@angular/common/http';
-import { Observable, throwError } from '../../../node_modules/rxjs';
-import { catchError, throwIfEmpty } from '../../../node_modules/rxjs/operators';
+} from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
+import { catchError, throwIfEmpty } from 'rxjs/operators';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {

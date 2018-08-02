@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using NetCore.API.Data;
+using NetCore.API.Helpers;
 
 namespace NetCore.API.Controllers
 {
@@ -20,9 +21,11 @@ namespace NetCore.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetOrders()
+        public async Task<IActionResult> GetOrders([FromQuery]Params p)
         {
-            var orders = await _repo.GetOrders();
+            var orders = await _repo.GetOrders(p);
+            
+            Response.AddPagination(orders.CurrentPage, orders.PageSize, orders.TotalCount, orders.TotalPages);
 
             return Ok(orders);
         }

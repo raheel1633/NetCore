@@ -1,0 +1,34 @@
+<div class="container">
+    <div class="table-responsive">
+        <table class="table table-striped table-sm">
+          <thead>
+            <tr>
+              <th>Order Number</th>
+              <th>Po Number</th>
+              <th>Customer</th>
+              <th>Start Date</th>
+              <th>End Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let o of orders; let i = index">
+              <td>{{o.orderNo}}</td>
+              <td>{{o.poNumber}}</td>
+              <td>{{o.billtoCliententity.entity.name}}</td>
+              <td>{{o.startDate}}</td>
+              <td>{{o.endDate}}</td>
+            </tr>
+          </tbody>
+        </table>
+     </div>
+</div>
+
+<div class="d-flex justify-content-center">
+  <pagination [boundaryLinks]="true" 
+     [totalItems]="pagination.totalItems"
+     [(ngModel)]="pagination.currentPage"
+     [itemsPerPage]="pagination.itemsPerPage"
+     (pageChanged)="pageChanged($event)"
+     [maxSize]="5"
+  previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;"></pagination>
+            </div>

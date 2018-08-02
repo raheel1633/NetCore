@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '../../../node_modules/@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 
 
 @Component({
@@ -12,16 +12,6 @@ export class OrderComponent implements OnInit {
 
   constructor(private http: HttpClient) { }
 
-  ngOnInit() {
-    this.getOrders();
-  }
-
-  getOrders() {
-    this.http.get('http://localhost:5000/api/orders').subscribe(response => {
-    this.orders = response;
-    }, error => {
-      console.log(error);
-    });
-  }
+  ngOnInit() {}
 
 }
