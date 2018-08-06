@@ -82,7 +82,16 @@ namespace NetCore.API
             }
             app.UseCors(c=> c.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
             app.UseAuthentication(); // it is use for Authentication which we implement
-            app.UseMvc();
+            app.UseDefaultFiles();
+            app.UseStaticFiles();
+            app.UseMvc(routes => {
+                routes.MapSpaFallbackRoute(
+                    name: "spa-fallback",
+                    defaults: new { controller = "FallBack", Action="Index"}
+
+                );
+
+            });
         }
     }
 }
